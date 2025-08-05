@@ -1,0 +1,93 @@
+# Manual de Administración: Aplicación de Registro de Entrenamientos
+
+## 1. Introducción
+
+Bienvenido al manual de administración de la aplicación de registro de entrenamientos. Esta guía está diseñada para ayudarte a entender cómo gestionar los datos y la configuración de la aplicación para asegurar su correcto funcionamiento.
+
+La aplicación permite a los usuarios ver las sesiones de entrenamiento disponibles y registrarse en ellas. La administración implica mantener actualizada la información de las sesiones, supervisar los registros y asegurar que los datos están bien ingresados y actualizados.
+
+## 2. Gestión de Sesiones de Entrenamiento
+
+!!!-> Mantener actualizada la oferta de entrenamientos. Estos datos residen en la Hoja de Google sheets llamada: `Sesiones`.
+
+**Formato de los Datos (Columnas Esperadas):**
+
+Es crucial mantener la estructura de columnas para que el Google Apps Script (el programa encargado de gestionar la app) pueda leer los datos y cargar de forma correcta las sesiones a los usuarios. 
+
+---> SessionID	 Name	Instructor	Location	DateTime	Capacity <---
+
+**Tareas Administrativas:**
+
+* **Añadir una Nueva Sesión:**
+    1.  Abre la Hoja de Google "Sesiones".
+    2.  Añade una nueva fila al final.
+    3.  Rellena todas las columnas necesarias (`SessionID` (con la fecha del entrenamiento en este formato: dd/MM/yyyy), `Name` (`Dimarts 17/05 – Laia Santanach`), `Instructor`, `Location` (utilizar desplegable), `DateTime` (utilizar desplegable), `Capacity` (con el número de plazas total).
+    4.  Guarda los cambios. La aplicación web debería mostrar la nueva sesión después de un breve periodo o al recargar.
+
+* **Modificar una Sesión Existente:**
+    1.  Localiza la fila de la sesión que quieres modificar en la Hoja de Google "Sesiones".
+    2.  Modifica los campos necesarios.
+        * **¡Cuidado al modificar `Capacity`!** Si lo reduces por debajo de las plazas ya registradas podría haber inconsistencias y fallos en el despliegue de sesiones.
+        * **¡Cuidado al modificar `SessionID`!** Este dato es el tronco del despliegue de sesiones. Escríbela en el formato correcto y evita repetir este dato en otros entrenamientos. 
+    3.  Guarda los cambios.
+
+* **Eliminar/Cancelar una Sesión:**
+    ** Borra la fila completa de la sesión. Haz esto con precaución y asegúrate de que es la sesión correcta. 
+
+
+## 3. Gestión de Registros de Usuarios
+
+Esta hoja de Google sheets almacena la información de cada usuario que se inscribe a un entrenamiento.
+
+**Ubicación del archivo de datos:** `Registro entrenamientos App - Registros`
+
+**Formato de los Datos (Columnas Esperadas):**
+Es crucial mantener la estructura de columnas para que el Google Apps Script (el programa encargado de gestionar la app) pueda leer los datos y escribir de forma correcta los registros de los usuarios. 
+
+RegistrationID	Timestamp	SessionID	UserName	UserPhone	UserEmail	IsMember	Status	CancellationToken
+
+
+**Tareas Administrativas:**
+
+* **Consultar Registros:**
+    1.  Abre la Hoja de Google "Registros".
+    2.  Puedes filtrar por `SessionID` para ver todos los inscritos a una sesión particular.
+    3.  Puedes buscar por `UserName`, `UserEmail`, etc.
+
+* **Actualización de registros:**
+Cada viernes a media noche, los registros se borran automáticamente entre las 23 y las 00. 
+
+* **Eliminar un Registro Manualmente (¡Con Precaución!):**
+    1.  Localiza el registro en la Hoja de Google "Registros" y elimínalo. Revisa que en la app se libere una plaza. 
+
+## 4. Gestión de Control de Listados de Asistencias
+
+El propósito de la hoja `Control_Correo` es seleccionar el destinatario de los listados de acuerdo al lugar donde se realiza el entrenamiento.
+
+**Listados:**
+El envío de listados está programado para realizarse cada día que haya entrenamiento a la dirección que esté referenciada en la hoja `Control_Correo`. 
+
+**Formato `Control_Correo`:**
+
+Lugar	Destinatarios
+
+**Tareas Administrativas:**
+
+* Revisar qué destinatario/s deben recibir qué listado de acuerdo al lugar del entrenamiento. De haber más de un destinatario, separar los correos con una `,`.
+
+**Formato Listado de Registres:**
+Cada día que haya entrenamiento, el destinatario recibirá un link con un listado de google sheets con el siguiente formato:
+
+
+Nombre |	Teléfono |	Email	| Socio/a	 |    Pago	            |   Observaciones
+       |             |          |            |  (Campo desplegable) |
+
+## 5. Mantenimiento y Solución de Problemas
+
+* **"Las sesiones no se cargan en la página web" / "No hi ha sessions disponibles..." (cuando sí deberían existir):**
+    1.  Verifica la Hoja de Google "Sesiones": ¿Están los datos ingresados de la forma correcta? 
+    2.  Conexión a internet.
+    3.  Contactar con soporte. 
+
+* **"Los usuarios reportan errores al registrarse":**
+    1.  Contactar con soporte

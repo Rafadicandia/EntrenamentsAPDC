@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Cancelación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilo base para la fuente */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Fondo gris claro */
+            display: flex; /* Usar flexbox para centrar */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+            min-height: 100vh; /* Altura mínima del 100% del viewport */
+            margin: 0; /* Eliminar margen por defecto */
+        }
+        /* Estilo para el contenedor principal */
+        .container {
+            max-width: 400px; /* Ancho máximo */
+            width: 95%; /* Ancho responsivo */
+            background-color: #ffffff; /* Fondo blanco */
+            padding: 2rem; /* Espaciado interno */
+            border-radius: 0.75rem; /* Bordes redondeados */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+            text-align: center; /* Centrar texto e imágenes */
+        }
+        h1 {
+            color: #4f46e5; /* Color índigo */
+            font-size: 1.875rem; /* Tamaño de fuente grande */
+            font-weight: 700; /* Negrita */
+            margin-bottom: 1rem; /* Margen inferior */
+        }
+        p {
+            color: #4b5563; /* Color gris oscuro */
+            font-size: 1rem; /* Tamaño de fuente normal */
+            margin-bottom: 1rem; /* Margen inferior */
+            line-height: 1.5; /* Espaciado de línea */
+        }
+        a {
+            color: #6366f1; /* Color índigo más claro para enlaces */
+            text-decoration: underline; /* Subrayado */
+            font-weight: 500; /* Peso de fuente medio */
+        }
+        a:hover {
+            color: #4f46e5; /* Color índigo al pasar el mouse */
+        }
+        .giphy-embed {
+            margin-top: 1.5rem; /* Margen superior para separar del texto */
+            border-radius: 0.5rem; /* Bordes redondeados para el GIF */
+            display: block; /* Hacer que el iframe sea un bloque para centrarlo */
+            margin-left: auto; /* Centrar horizontalmente */
+            margin-right: auto; /* Centrar horizontalmente */
+            max-width: 100%; /* Asegurar que no se desborde en pantallas pequeñas */
+            height: auto; /* Mantener la relación de aspecto */
+        }
+        .giphy-link {
+            font-size: 0.875rem; /* Tamaño de fuente pequeño para el enlace de Giphy */
+            color: #9ca3af; /* Color gris más claro */
+            margin-top: 0.5rem; /* Margen superior */
+            display: block; /* Asegurar que esté en su propia línea */
+        }
+         .giphy-link:hover {
+            color: #6b7280; /* Color gris al pasar el mouse */
+        }
+    </style>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Ens veiem aviat</h1>
+        <p><?!= message ?></p>
+        <p>
+            <a href="https://registro-entrenamientos-app.glitch.me/">Tornar a la pàgina de registre</a>
+            (Si necessites apuntar-te a una altra sessió)
+        </p>
+
+        <iframe src="https://giphy.com/embed/BK1EfIsdkKZMY" width="378" height="480" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/cat-dance-furry-BK1EfIsdkKZMY">via GIPHY</a></p>
+    </div>
+</body>
+</html>

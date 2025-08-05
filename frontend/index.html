@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registre d'Entrenaments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Definimos un color personalizado basado en el rosa frambuesa */
+        /* Hex aproximado del color de la imagen: #DB2777 */
+        :root {
+            --color-primary-pink: #DB2777;
+            --color-primary-pink-dark: #C02166; /* Un poco más oscuro para hover/focus */
+            --color-primary-pink-light: #F48FB1; /* Un tono más claro para anillos de enfoque */
+            --color-background-pink: #F8BBD0; /* Un rosa de fondo un poco más visible */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background-pink); /* Usamos el nuevo rosa de fondo */
+        }
+
+        /* Adaptamos las clases de feedback */
+        .feedback-message { padding: 1rem; margin-top: 1rem; border-radius: 0.5rem; text-align: center; }
+        .success { background-color: #e8f5e9; color: #2e7d32; } /* Verde más suave */
+        .error { background-color: #ffebee; color: #c62828; } /* Rojo más suave */
+
+        /* Estilos para el modal */
+        #registrationModal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
+        #registrationModalContent { background-color: #fefefe; margin: auto; padding: 2rem; border: 1px solid #eee; width: 90%; max-width: 500px; border-radius: 0.75rem; /* Bordes más redondeados */ position: relative; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra más pronunciada */ }
+        .close-button { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; /* Icono más grande */ font-weight: bold; cursor: pointer; color: #aaa; transition: color 0.2s ease-in-out; }
+        .close-button:hover, .close-button:focus { color: #777; text-decoration: none; cursor: pointer; }
+
+        /* Loader */
+        .loader {
+            border: 4px solid #f3e5f5; /* Rosa muy claro */
+            border-top: 4px solid var(--color-primary-pink); /* Nuestro rosa principal */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto; /* Centrat */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Adaptamos los estilos de los botones principales y inputs */
+        .btn-primary {
+             background-color: var(--color-primary-pink);
+             color: white;
+             border-radius: 0.375rem; /* rounded-md */
+             padding: 0.5rem 1rem; /* px-4 py-2 */
+             font-size: 0.875rem; /* text-sm */
+             transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: var(--color-primary-pink-dark);
+        }
+         .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(var(--color-primary-pink-light), 0.5); /* Anillo de enfoque */
+         }
+         .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+         }
+         
+         /* Eliminamos la clase btn-success-confirm ya que el botón no se pondrá verde */
+         /* .btn-success-confirm {
+            background-color: #22c55e; 
+         }
+         .btn-success-confirm:hover {
+            background-color: #16a34a; 
+         }
+         .btn-success-confirm:focus {
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5); 
+         } */
+
+
+         .btn-secondary {
+             background-color: #e0e0e0; /* Gris */
+             color: #424242; /* Gris oscuro */
+             border-radius: 0.375rem; /* rounded-md */
+             padding: 0.5rem 1rem; /* px-4 py-2 */
+             font-size: 0.875rem; /* text-sm */
+             transition: background-color 0.2s ease-in-out;
+         }
+         .btn-secondary:hover {
+            background-color: #d5d5d5; /* Gris un poco más oscuro */
+         }
+          .btn-secondary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(158, 158, 158, 0.5); /* Anillo de enfoque gris */
+         }
+
+
+        /* Estilos para inputs de formulario */
+        .form-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem; /* px-3 py-2 */
+            border: 1px solid #bdbdbd; /* Gris medio */
+            border-radius: 0.375rem; /* rounded-md */
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075); /* Sombra interior suave */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary-pink-light); /* Borde con nuestro rosa claro */
+            box-shadow: 0 0 0 3px rgba(var(--color-primary-pink-light), 0.25); /* Anillo de enfoque con transparencia */
+        }
+
+         /* Estilos para radio buttons */
+         .form-radio {
+            height: 1rem;
+            width: 1rem;
+            color: var(--color-primary-pink); /* Color del radio button */
+            border-color: #bdbdbd; /* Color del borde */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            /* Eliminamos las clases de Tailwind de color azul */
+            /* text-indigo-600 focus:ring-indigo-500 */
+         }
+         .form-radio:focus {
+            outline: none;
+            border-color: var(--color-primary-pink-light);
+            box-shadow: 0 0 0 3px rgba(var(--color-primary-pink-light), 0.25);
+         }
+
+
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-4 md:p-8">
+    <div class="container mx-auto max-w-4xl bg-white p-6 rounded-lg shadow-xl text-center">
+      <img src="https://i.imgur.com/WnTf9gA.png" class="w-48 h-auto mx-auto" alt="Descripción de la imagen">
+       
+      <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">ENTRENAMENTS DE CONTEMPORANI <br> PER A PROFESSIONALS</h1>
+          
+      <a href="https://www.dansacat.org/lassociacio/serveis-associades/entrenaments-
+professionals-contemporani/" class="text-center font-medium text-pink-600 dark:text-blue-500 hover:underline ">Consulta la nostra web per a més informació</a>
+
+      <p class="text-center text-gray-600 mb-8 font-bold">Seleccioneu les sessions a les quals us voleu apuntar.</p>
+
+
+        <div id="sessionsList" class="space-y-4">
+            <div class="loader"></div>
+            <p class="text-center text-gray-500">Carregant sessions...</p>
+        </div>
+
+        <div id="feedbackArea" class="mt-6 "></div>
+       
+</div>
+
+    <div id="registrationModal" class="items-center justify-center">
+        <div id="registrationModalContent" class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-auto">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2 class="text-xl font-bold mb-4 text-gray-800" id="modalTitle">Confirmar Registre</h2>
+            <p class="mb-4 text-gray-600" id="modalInitialMessage">Et registraràs a: <strong id="modalSessionName"></strong></p>
+
+            <form id="registrationForm">
+                <input type="hidden" id="sessionId" name="sessionId">
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nom:</label>
+                    <input type="text" id="name" name="name" required class="form-input">
+                </div>
+                <div class="mb-4">
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telèfon:</label>
+                    <input type="tel" id="phone" name="phone" required class="form-input">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correu electrònic:</label>
+                    <input type="email" id="email" name="email" required class="form-input">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Ets sòcia/soci?</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="isMember" value="true" required class="form-radio">
+                            <span class="ml-2 text-gray-700">Sí</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="isMember" value="false" required class="form-radio">
+                            <span class="ml-2 text-gray-700">No</span>
+                        </label>
+                    </div>
+                </div>
+              
+                <div class="flex items-start mb-3">
+                    <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required class="form-checkbox">
+                    <label for="link-checkbox" class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">En virtut de la  normativa de  Protecció de Dades de Caràcter Personal, amb la
+                      vostra inscripció accepteu que les vostres dades personals facilitades siguin 
+                      incorporades en un fitxer denominat “Butlletí” responsabilitat de les
+                      associacions organitzadores, APdC i La Piconera. La finalitat d’aquest
+                      tractament és el control i gestió del Butlletí i els enviaments que realitza, i en
+                      relació amb els seus interessats. Aquestes dades no seran transmeses a
+                      terceres persones i seran conservades sempre que sigui imprescindible o
+                      legítim per la finalitat que es van captar. En qualsevol cas podrà indicar la
+                      revocació del consentiment atorgat, així com exercitar els drets d’accés,
+                      rectificació o supressió, la limitació del tractament o oposar-se, així com el dret
+                      a la portabilitat de les dades.  S’informa que també pot presentar una
+                      reclamació, si així ho considera, davant l’Agència espanyola de protecció de
+                      dades.</label>
+                </div>
+               <div class="flex items-start">
+                    <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required class="form-checkbox">
+                    <label for="link-checkbox" class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">Accepto respectar i complir les normes de convivència i de funcionament de
+                      l’APdC, així com a respectar i complir el <a href="https://www.dansacat.org/lassociacio/cures-i-buenas-praxis/" class="text-blue-600 dark:text-blue-500 hover:underline">seu Reglament de Règim Intern </a>i el
+                      <a href="https://www.dansacat.org/lassociacio/cures-i-buenas-praxis/" class="text-blue-600 dark:text-blue-500 hover:underline">Protocol contra les violències masclistes</a>, que declaro conèixer i haver llegit en
+                      el moment de signar el present formulari.</label>
+                </div>
+
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal()" class="btn-secondary" id="cancelModalButton">
+                        Cancel·lar
+                    </button>
+                    <button type="submit" id="submitButton" class="btn-primary">
+                        Confirmar Registre
+                    </button>
+                </div>
+            </form>
+            
+            <div id="successMessageContainer" class="hidden mt-4 p-4 bg-green-50 rounded-lg border border-green-200 text-green-800">
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <p id="successMessageText" class="font-medium text-sm md:text-base"></p>
+                </div>
+            </div>
+            
+            <div id="modalFeedbackArea" class="mt-4"></div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Configuració ---
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzHX187wj8p4jISMff2JuVkYYHGI3ZWRkIT7MpG2GUEgLqxpmKUmmg0mUQ1bRPU9B9bkA/exec'; // URL de l'Apps Script (no canviar si ja funciona)
+
+        // --- Variables Globals ---
+        const sessionsListElement = document.getElementById('sessionsList');
+        const registrationModal = document.getElementById('registrationModal');
+        const registrationForm = document.getElementById('registrationForm');
+        const feedbackArea = document.getElementById('feedbackArea'); // Para mensajes de la página principal
+        const modalFeedbackArea = document.getElementById('modalFeedbackArea'); // Para mensajes de error en el modal
+        const modalSessionName = document.getElementById('modalSessionName');
+        const sessionIdInput = document.getElementById('sessionId');
+        const submitButton = document.getElementById('submitButton');
+
+        // Referencias a elementos del modal para controlar su visibilidad
+        const modalTitle = document.getElementById('modalTitle');
+        const modalInitialMessage = document.getElementById('modalInitialMessage');
+        const cancelModalButton = document.getElementById('cancelModalButton');
+
+        // Nuevas referencias para el mensaje de éxito
+        const successMessageContainer = document.getElementById('successMessageContainer');
+        const successMessageText = document.getElementById('successMessageText');
+
+
+        let currentSessions = [];
+
+        // --- Funcions ---
+
+        /**
+         * Carrega les sessions des del Google Apps Script.
+         */
+        async function loadSessions() {
+            sessionsListElement.innerHTML = `
+                <div class="loader"></div>
+                <p class="text-center text-gray-500">Carregant sessions...</p>`;
+            feedbackArea.innerHTML = ''; // Limpia el feedback del área principal
+
+            try {
+                const response = await fetch(SCRIPT_URL);
+                if (!response.ok) {
+                    let errorMsg = `Error HTTP: ${response.status}`;
+                    try {
+                        const errorData = await response.json();
+                        errorMsg = errorData.error || errorMsg;
+                    } catch (parseError) { /* Ignorar si no és JSON */ }
+                    throw new Error(errorMsg);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                currentSessions = data.sessions || [];
+                displaySessions(currentSessions);
+
+            } catch (error) {
+                console.error('Error en carregar sessions:', error);
+                sessionsListElement.innerHTML = `<p class="text-center text-red-600">Error en carregar les sessions: ${error.message}. Intenta-ho de nou més tard.</p>`;
+            }
+        }
+
+        /**
+         * Mostra les sessions a la llista.
+         * @param {Array<object>} sessions - L'array de sessions a mostrar.
+         */
+        function displaySessions(sessions) {
+            sessionsListElement.innerHTML = '';
+
+            // Filtrar solo las sesiones que no están "Finalizado"
+            const activeSessions = sessions.filter(session => session.sessionStatus !== 'Finalizado');
+
+            if (!activeSessions || activeSessions.length === 0) {
+                sessionsListElement.innerHTML = '<p class="text-center text-gray-500">No hi ha sessions disponibles actualment.</p>';
+                return;
+            }
+
+            activeSessions.forEach(session => { // Iterar sobre las sesiones activas
+                const remainingSpots = session.remainingSpots;
+                const isFull = remainingSpots <= 0;
+
+                const sessionElement = document.createElement('div');
+                // Adaptamos las clases de color y sombra
+                sessionElement.className = `p-4 border ${isFull ? 'bg-gray-200 border-gray-300' : 'bg-white border-gray-200'} rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0`;
+
+                sessionElement.innerHTML = `
+                    <div>
+                        <h3 class="text-lg font-semibold ${isFull ? 'text-gray-500' : 'text-gray-800'}">${session.name}</h3>
+                        <p class="text-sm text-gray-600">Lloc: ${session.location} | Horari: ${session.dateTime}</p>
+                        
+                    </div>
+                    <div class="text-center">
+                        <p class="text-sm font-medium ${isFull ? 'text-red-600' : 'text-green-600'}">
+                            ${isFull ? 'Complet' : `${remainingSpots} places lliures`}
+                        </p>
+                        <button
+                            onclick="openModal('${session.id}')"
+                            class="mt-1 px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                            ${isFull ? 'disabled' : ''}
+                        >
+                            ${isFull ? 'Complet' : 'Apuntar-se'}
+                        </button>
+                    </div>
+                `;
+                // Reemplazamos las clases de color del botón por las nuevas clases personalizadas
+                const registerButton = sessionElement.querySelector('button');
+                if (!isFull) {
+                    // Aseguramos que no tiene las clases de color indigo originales
+                    registerButton.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-indigo-500');
+                    // Añadimos la clase primaria
+                    registerButton.classList.add('btn-primary');
+                }
+
+
+                sessionsListElement.appendChild(sessionElement);
+            });
+        }
+
+        /**
+         * Obre el modal de registre per a una sessió específica.
+         */
+        function openModal(sessionId) {
+            const session = currentSessions.find(s => s.id === sessionId);
+            if (!session) {
+                console.error("No s'ha trobat la sessió amb ID:", sessionId);
+                showFeedback("Error: No s'ha pogut trobar la informació de la sessió.", false);
+                return;
+            }
+
+            // Resetear el estado del modal a su apariencia original antes de abrirlo
+            modalTitle.textContent = 'Confirmar Registre';
+            modalInitialMessage.style.display = 'block'; // Mostrar el mensaje inicial de la sesión
+            registrationForm.style.display = 'block'; // Mostrar el formulario
+            cancelModalButton.style.display = 'inline-block'; // Mostrar el botón de cancelar
+            
+            // Ocultar el mensaje de éxito si estaba visible de una interacción anterior
+            successMessageContainer.classList.add('hidden'); 
+
+            // Usamos el texto de la sesión con más detalles que añadiste
+            modalSessionName.textContent = `${session.name} | Horari: ${session.dateTime} | Lloc: ${session.location}`;
+            sessionIdInput.value = session.id;
+
+            registrationForm.reset(); // Limpiar los campos del formulario
+            feedbackArea.innerHTML = ''; // Limpiar mensajes de feedback fuera del modal
+            modalFeedbackArea.innerHTML = ''; // Limpiar mensajes de feedback dentro del modal
+
+            submitButton.disabled = false;
+            submitButton.textContent = 'Confirmar Registre';
+            submitButton.classList.add('btn-primary'); // Asegura que tiene la clase primaria (no necesitamos remover btn-success-confirm aquí ya que no se añade)
+
+            registrationModal.style.display = 'flex'; // Mostrar el modal
+        }
+
+        /**
+         * Tanca el modal de registre.
+         */
+        function closeModal() {
+            registrationModal.style.display = 'none';
+            // Reestablecer el estado del modal a su apariencia original para la próxima vez que se abra
+            modalTitle.textContent = 'Confirmar Registre';
+            modalInitialMessage.style.display = 'block';
+            registrationForm.style.display = 'block';
+            cancelModalButton.style.display = 'inline-block';
+            successMessageContainer.classList.add('hidden'); // Ocultar el mensaje de éxito
+
+            submitButton.disabled = false;
+            submitButton.textContent = 'Confirmar Registre';
+            submitButton.classList.add('btn-primary');
+        }
+
+        /**
+         * Mostra un missatge de feedback.
+         */
+        function showFeedback(message, isSuccess, insideModal = false) {
+            const targetArea = insideModal ? modalFeedbackArea : feedbackArea;
+            targetArea.innerHTML = `
+                <div class="feedback-message ${isSuccess ? 'success' : 'error'}">
+                    ${message}
+                </div>
+            `;
+            if (!insideModal) {
+                targetArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+
+        /**
+         * Gestiona l'enviament del formulari de registre trucant al backend.
+         */
+        async function handleRegistrationSubmit(event) {
+            event.preventDefault();
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processant...';
+            modalFeedbackArea.innerHTML = ''; // Limpiar área de feedback del modal
+            successMessageContainer.classList.add('hidden'); // Asegurarse de que el mensaje de éxito esté oculto al procesar
+
+            const formData = new FormData(registrationForm);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    let errorMsg = `Error HTTP: ${response.status}`;
+                    try {
+                        const errorData = await response.json();
+                        errorMsg = errorData.message || errorMsg;
+                    } catch (parseError) { /* Ignorar si no és JSON */ }
+                    throw new Error(errorMsg);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Ocultar el formulario
+                    registrationForm.style.display = 'none';
+                    modalInitialMessage.style.display = 'none'; // También ocultar el mensaje inicial de la sesión si el formulario desaparece
+
+                    // Mostrar el contenedor del mensaje de éxito
+                    successMessageContainer.classList.remove('hidden');
+                    successMessageText.textContent = result.message; // Establecer el texto del mensaje de éxito
+
+                    // Cambiar el título del modal
+                    modalTitle.textContent = '¡Registre Realitzat!';
+
+                    // Cerrar el modal y recargar sesiones después de un breve retraso
+                    setTimeout(() => {
+                        closeModal();
+                        loadSessions(); // Recargar sesiones para actualizar las plazas en la página principal
+                    }, 8000); // Retraso de 8 segundos
+
+                } else {
+                    // Si hay un error, mostrar el mensaje en el área de feedback del modal
+                    showFeedback(result.message || "Error desconegut en registrar.", false, true);
+                    
+                    // Restaurar el botón y asegurar que el formulario esté visible
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Confirmar Registre';
+                    submitButton.classList.add('btn-primary'); // Asegurar que tiene la clase primaria
+                    
+                    registrationForm.style.display = 'block'; // Mostrar formulario
+                    modalInitialMessage.style.display = 'block'; // Mostrar mensaje inicial
+                    cancelModalButton.style.display = 'inline-block'; // Mostrar botón cancelar
+                    modalTitle.textContent = 'Confirmar Registre'; // Volver al título original
+                    successMessageContainer.classList.add('hidden'); // Asegurarse de que el mensaje de éxito esté oculto
+                }
+
+            } catch (error) {
+                console.error('Error en enviar el registre:', error);
+                showFeedback(`Error de connexió o del servidor: ${error.message}`, false, true);
+                
+                // Restaurar el botón y asegurar que el formulario esté visible en caso de error de conexión
+                submitButton.disabled = false;
+                submitButton.textContent = 'Confirmar Registre';
+                    submitButton.classList.add('btn-primary');
+                
+                registrationForm.style.display = 'block';
+                modalInitialMessage.style.display = 'block';
+                cancelModalButton.style.display = 'inline-block';
+                modalTitle.textContent = 'Confirmar Registre';
+                successMessageContainer.classList.add('hidden');
+            }
+        }
+
+        // --- Inicialització ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Comprova si la URL de l'script està configurada correctament (no és la placeholder)
+            if (SCRIPT_URL === 'URL_DE_TU_APPS_SCRIPT_AQUI' || !SCRIPT_URL || (SCRIPT_URL.includes("AKfycbwH835QLT2wsN3al7U_UrAFDol6ROPnanLCJ-xV15E9v_Jltl_-0sS2xGJFV_c-H_5zXQ") && !SCRIPT_URL.startsWith("https://script.google.com/macros/s/"))) {
+                if (SCRIPT_URL === 'URL_DE_TU_APPS_SCRIPT_AQUI') {
+                    sessionsListElement.innerHTML = '<p class="text-center text-red-600 font-bold">Error de configuració: Has d\'editar el fitxer HTML i reemplaçar \'URL_DE_TU_APPS_SCRIPT_AQUI\' amb la URL del teu Google Apps Script desplegat.</p>';
+                    return;
+                }
+            }
+
+            loadSessions();
+            registrationForm.addEventListener('submit', handleRegistrationSubmit);
+
+            window.onclick = function(event) {
+                if (event.target == registrationModal) {
+                    closeModal();
+                }
+            }
+        });
+
+    </script>
+
+</body>
+</html>
