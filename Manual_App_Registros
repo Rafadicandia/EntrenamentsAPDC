@@ -22,17 +22,21 @@ Es crucial mantener la estructura de columnas para que el Google Apps Script (el
     1.  Abre la Hoja de Google "Sesiones".
     2.  Añade una nueva fila al final.
     3.  Rellena todas las columnas necesarias (`SessionID` (con la fecha del entrenamiento en este formato: dd/MM/yyyy), `Name` (`Dimarts 17/05 – Laia Santanach`), `Instructor`, `Location` (utilizar desplegable), `DateTime` (utilizar desplegable), `Capacity` (con el número de plazas total).
-    4.  Guarda los cambios. La aplicación web debería mostrar la nueva sesión después de un breve periodo o al recargar.
+    4.  Los cambios se guardan automáticamente. La aplicación web debería mostrar la nueva sesión después de un breve periodo o al recargar.
 
 * **Modificar una Sesión Existente:**
     1.  Localiza la fila de la sesión que quieres modificar en la Hoja de Google "Sesiones".
     2.  Modifica los campos necesarios.
         * **¡Cuidado al modificar `Capacity`!** Si lo reduces por debajo de las plazas ya registradas podría haber inconsistencias y fallos en el despliegue de sesiones.
         * **¡Cuidado al modificar `SessionID`!** Este dato es el tronco del despliegue de sesiones. Escríbela en el formato correcto y evita repetir este dato en otros entrenamientos. 
-    3.  Guarda los cambios.
+    3.  Los cambios se guardan automáticamente.
+
+* **Estado de una Sesión:**
+Las sesiones estarán activas hasta el día del entrenamiento. Ese día, entre las 08:00 y las 09:00 se cambiará automáticamente el Estado de la Sesión a "Finalizado" y desaparecerá de la web. 
 
 * **Eliminar/Cancelar una Sesión:**
-    ** Borra la fila completa de la sesión. Haz esto con precaución y asegúrate de que es la sesión correcta. 
+    ** Puedes cambiar el Estado de la sesión a "Finalizado" para que no se despliegue en la web.
+    ** Si quieres borrar: elimina la fila completa de la sesión. Haz esto con precaución y asegúrate de que es la sesión correcta. 
 
 
 ## 3. Gestión de Registros de Usuarios
@@ -53,9 +57,6 @@ RegistrationID	Timestamp	SessionID	UserName	UserPhone	UserEmail	IsMember	Status	
     1.  Abre la Hoja de Google "Registros".
     2.  Puedes filtrar por `SessionID` para ver todos los inscritos a una sesión particular.
     3.  Puedes buscar por `UserName`, `UserEmail`, etc.
-
-* **Actualización de registros:**
-Cada viernes a media noche, los registros se borran automáticamente entre las 23 y las 00. 
 
 * **Eliminar un Registro Manualmente (¡Con Precaución!):**
     1.  Localiza el registro en la Hoja de Google "Registros" y elimínalo. Revisa que en la app se libere una plaza. 

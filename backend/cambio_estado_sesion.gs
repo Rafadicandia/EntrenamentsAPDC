@@ -12,6 +12,7 @@
 // Nombre de la columna que contiene la fecha y hora de la sesión
 const SESSION_DATETIME_COLUMN_NAME = 'SessionID'; 
 
+
 function actualizarEstadoSesionPorFecha() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   const sessionsSheet = spreadsheet.getSheetByName(SESSIONS_SHEET_NAME);

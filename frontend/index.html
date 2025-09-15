@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ca">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,65 +11,143 @@
         /* Hex aproximado del color de la imagen: #DB2777 */
         :root {
             --color-primary-pink: #DB2777;
-            --color-primary-pink-dark: #C02166; /* Un poco más oscuro para hover/focus */
-            --color-primary-pink-light: #F48FB1; /* Un tono más claro para anillos de enfoque */
-            --color-background-pink: #F8BBD0; /* Un rosa de fondo un poco más visible */
+            --color-primary-pink-dark: #C02166;
+            /* Un poco más oscuro para hover/focus */
+            --color-primary-pink-light: #F48FB1;
+            /* Un tono más claro para anillos de enfoque */
+            --color-background-pink: #F8BBD0;
+            /* Un rosa de fondo un poco más visible */
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--color-background-pink); /* Usamos el nuevo rosa de fondo */
+            background-color: var(--color-background-pink);
+            /* Usamos el nuevo rosa de fondo */
         }
 
         /* Adaptamos las clases de feedback */
-        .feedback-message { padding: 1rem; margin-top: 1rem; border-radius: 0.5rem; text-align: center; }
-        .success { background-color: #e8f5e9; color: #2e7d32; } /* Verde más suave */
-        .error { background-color: #ffebee; color: #c62828; } /* Rojo más suave */
+        .feedback-message {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        /* Verde más suave */
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        /* Rojo más suave */
 
         /* Estilos para el modal */
-        #registrationModal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
-        #registrationModalContent { background-color: #fefefe; margin: auto; padding: 2rem; border: 1px solid #eee; width: 90%; max-width: 500px; border-radius: 0.75rem; /* Bordes más redondeados */ position: relative; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra más pronunciada */ }
-        .close-button { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; /* Icono más grande */ font-weight: bold; cursor: pointer; color: #aaa; transition: color 0.2s ease-in-out; }
-        .close-button:hover, .close-button:focus { color: #777; text-decoration: none; cursor: pointer; }
+        #registrationModal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            align-items: center;
+            justify-content: center;
+        }
+
+        #registrationModalContent {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2rem;
+            border: 1px solid #eee;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 0.75rem;
+            /* Bordes más redondeados */
+            position: relative;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            /* Sombra más pronunciada */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.8rem;
+            /* Icono más grande */
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #777;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
         /* Loader */
         .loader {
-            border: 4px solid #f3e5f5; /* Rosa muy claro */
-            border-top: 4px solid var(--color-primary-pink); /* Nuestro rosa principal */
+            border: 4px solid #f3e5f5;
+            /* Rosa muy claro */
+            border-top: 4px solid var(--color-primary-pink);
+            /* Nuestro rosa principal */
             border-radius: 50%;
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
-            margin: 20px auto; /* Centrat */
+            margin: 20px auto;
+            /* Centrat */
         }
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Adaptamos los estilos de los botones principales y inputs */
         .btn-primary {
-             background-color: var(--color-primary-pink);
-             color: white;
-             border-radius: 0.375rem; /* rounded-md */
-             padding: 0.5rem 1rem; /* px-4 py-2 */
-             font-size: 0.875rem; /* text-sm */
-             transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+            background-color: var(--color-primary-pink);
+            color: white;
+            border-radius: 0.375rem;
+            /* rounded-md */
+            padding: 0.5rem 1rem;
+            /* px-4 py-2 */
+            font-size: 0.875rem;
+            /* text-sm */
+            transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
         }
+
         .btn-primary:hover {
             background-color: var(--color-primary-pink-dark);
         }
-         .btn-primary:focus {
+
+        .btn-primary:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(var(--color-primary-pink-light), 0.5); /* Anillo de enfoque */
-         }
-         .btn-primary:disabled {
+            box-shadow: 0 0 0 3px rgba(var(--color-primary-pink-light), 0.5);
+            /* Anillo de enfoque */
+        }
+
+        .btn-primary:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-         }
-         
-         /* Eliminamos la clase btn-success-confirm ya que el botón no se pondrá verde */
-         /* .btn-success-confirm {
+        }
+
+        /* Eliminamos la clase btn-success-confirm ya que el botón no se pondrá verde */
+        /* .btn-success-confirm {
             background-color: #22c55e; 
          }
          .btn-success-confirm:hover {
@@ -79,70 +158,89 @@
          } */
 
 
-         .btn-secondary {
-             background-color: #e0e0e0; /* Gris */
-             color: #424242; /* Gris oscuro */
-             border-radius: 0.375rem; /* rounded-md */
-             padding: 0.5rem 1rem; /* px-4 py-2 */
-             font-size: 0.875rem; /* text-sm */
-             transition: background-color 0.2s ease-in-out;
-         }
-         .btn-secondary:hover {
-            background-color: #d5d5d5; /* Gris un poco más oscuro */
-         }
-          .btn-secondary:focus {
+        .btn-secondary {
+            background-color: #e0e0e0;
+            /* Gris */
+            color: #424242;
+            /* Gris oscuro */
+            border-radius: 0.375rem;
+            /* rounded-md */
+            padding: 0.5rem 1rem;
+            /* px-4 py-2 */
+            font-size: 0.875rem;
+            /* text-sm */
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d5d5d5;
+            /* Gris un poco más oscuro */
+        }
+
+        .btn-secondary:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(158, 158, 158, 0.5); /* Anillo de enfoque gris */
-         }
+            box-shadow: 0 0 0 3px rgba(158, 158, 158, 0.5);
+            /* Anillo de enfoque gris */
+        }
 
 
         /* Estilos para inputs de formulario */
         .form-input {
             width: 100%;
-            padding: 0.5rem 0.75rem; /* px-3 py-2 */
-            border: 1px solid #bdbdbd; /* Gris medio */
-            border-radius: 0.375rem; /* rounded-md */
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075); /* Sombra interior suave */
+            padding: 0.5rem 0.75rem;
+            /* px-3 py-2 */
+            border: 1px solid #bdbdbd;
+            /* Gris medio */
+            border-radius: 0.375rem;
+            /* rounded-md */
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+            /* Sombra interior suave */
             transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
+
         .form-input:focus {
             outline: none;
-            border-color: var(--color-primary-pink-light); /* Borde con nuestro rosa claro */
-            box-shadow: 0 0 0 3px rgba(var(--color-primary-pink-light), 0.25); /* Anillo de enfoque con transparencia */
+            border-color: var(--color-primary-pink-light);
+            /* Borde con nuestro rosa claro */
+            box-shadow: 0 0 0 3px rgba(var(--color-primary-pink-light), 0.25);
+            /* Anillo de enfoque con transparencia */
         }
 
-         /* Estilos para radio buttons */
-         .form-radio {
+        /* Estilos para radio buttons */
+        .form-radio {
             height: 1rem;
             width: 1rem;
-            color: var(--color-primary-pink); /* Color del radio button */
-            border-color: #bdbdbd; /* Color del borde */
+            color: var(--color-primary-pink);
+            /* Color del radio button */
+            border-color: #bdbdbd;
+            /* Color del borde */
             transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
             /* Eliminamos las clases de Tailwind de color azul */
             /* text-indigo-600 focus:ring-indigo-500 */
-         }
-         .form-radio:focus {
+        }
+
+        .form-radio:focus {
             outline: none;
             border-color: var(--color-primary-pink-light);
             box-shadow: 0 0 0 3px rgba(var(--color-primary-pink-light), 0.25);
-         }
-
-
+        }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 p-4 md:p-8">
     <div class="container mx-auto max-w-4xl bg-white p-6 rounded-lg shadow-xl text-center">
-      <img src="https://i.imgur.com/WnTf9gA.png" class="w-48 h-auto mx-auto" alt="Descripción de la imagen">
-       
-      <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">ENTRENAMENTS DE CONTEMPORANI <br> PER A PROFESSIONALS</h1>
-          
-      <a href="https://www.dansacat.org/lassociacio/serveis-associades/entrenaments-
-professionals-contemporani/" class="text-center font-medium text-pink-600 dark:text-blue-500 hover:underline ">Consulta la nostra web per a més informació</a>
+        <img src="https://i.imgur.com/WnTf9gA.png" class="w-48 h-auto mx-auto" alt="Descripción de la imagen">
 
-      <p class="text-center text-gray-600 mb-8 font-bold">Seleccioneu les sessions a les quals us voleu apuntar.</p>
+        <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">ENTRENAMENTS DE CONTEMPORANI <br> PER A PROFESSIONALS</h1>
+
+        <p class="text-center text-gray-600 mb-4 font-bold">Seleccioneu les sessions a les quals us voleu apuntar.</p>
+
+        <a href="https://www.dansacat.org/lassociacio/serveis-associades/entrenaments-professionals-contemporani/"
+           target="_blank" rel="noopener noreferrer" class="block text-center font-medium text-pink-600 mb-4 dark:text-blue-500 hover:underline ">Consulta la nostra
+            web per a més informació</a>
 
 
         <div id="sessionsList" class="space-y-4">
@@ -151,16 +249,18 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
         </div>
 
         <div id="feedbackArea" class="mt-6 "></div>
-       
-</div>
+
+    </div>
 
     <div id="registrationModal" class="items-center justify-center">
         <div id="registrationModalContent" class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-auto">
             <span class="close-button" onclick="closeModal()">&times;</span>
             <h2 class="text-xl font-bold mb-4 text-gray-800" id="modalTitle">Confirmar Registre</h2>
-            <p class="mb-4 text-gray-600" id="modalInitialMessage">Et registraràs a: <strong id="modalSessionName"></strong></p>
+            <p class="mb-4 text-gray-600" id="modalInitialMessage">Et registraràs a: <strong
+                    id="modalSessionName"></strong></p>
 
             <form id="registrationForm">
+                <input type="text" name="bot-field" id="bot-field" style="display:none !important;">
                 <input type="hidden" id="sessionId" name="sessionId">
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nom:</label>
@@ -187,29 +287,40 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
                         </label>
                     </div>
                 </div>
-              
+
                 <div class="flex items-start mb-3">
-                    <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required class="form-checkbox">
-                    <label for="link-checkbox" class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">En virtut de la  normativa de  Protecció de Dades de Caràcter Personal, amb la
-                      vostra inscripció accepteu que les vostres dades personals facilitades siguin 
-                      incorporades en un fitxer denominat “Butlletí” responsabilitat de les
-                      associacions organitzadores, APdC i La Piconera. La finalitat d’aquest
-                      tractament és el control i gestió del Butlletí i els enviaments que realitza, i en
-                      relació amb els seus interessats. Aquestes dades no seran transmeses a
-                      terceres persones i seran conservades sempre que sigui imprescindible o
-                      legítim per la finalitat que es van captar. En qualsevol cas podrà indicar la
-                      revocació del consentiment atorgat, així com exercitar els drets d’accés,
-                      rectificació o supressió, la limitació del tractament o oposar-se, així com el dret
-                      a la portabilitat de les dades.  S’informa que també pot presentar una
-                      reclamació, si així ho considera, davant l’Agència espanyola de protecció de
-                      dades.</label>
+                    <input id="link-checkbox" type="checkbox" value=""
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        required class="form-checkbox">
+                    <label for="link-checkbox" class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">En
+                        virtut de la  normativa de  Protecció de Dades de Caràcter Personal, amb la
+                        vostra inscripció accepteu que les vostres dades personals facilitades siguin 
+                        incorporades en un fitxer denominat “Butlletí” responsabilitat de les
+                        associacions organitzadores, APdC i La Piconera. La finalitat d’aquest
+                        tractament és el control i gestió del Butlletí i els enviaments que realitza, i en
+                        relació amb els seus interessats. Aquestes dades no seran transmeses a
+                        terceres persones i seran conservades sempre que sigui imprescindible o
+                        legítim per la finalitat que es van captar. En qualsevol cas podrà indicar la
+                        revocació del consentiment atorgat, així com exercitar els drets d’accés,
+                        rectificació o supressió, la limitació del tractament o oposar-se, així com el dret
+                        a la portabilitat de les dades.  S’informa que també pot presentar una
+                        reclamació, si així ho considera, davant l’Agència espanyola de protecció de
+                        dades.</label>
                 </div>
-               <div class="flex items-start">
-                    <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required class="form-checkbox">
-                    <label for="link-checkbox" class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">Accepto respectar i complir les normes de convivència i de funcionament de
-                      l’APdC, així com a respectar i complir el <a href="https://www.dansacat.org/lassociacio/cures-i-buenas-praxis/" class="text-blue-600 dark:text-blue-500 hover:underline">seu Reglament de Règim Intern </a>i el
-                      <a href="https://www.dansacat.org/lassociacio/cures-i-buenas-praxis/" class="text-blue-600 dark:text-blue-500 hover:underline">Protocol contra les violències masclistes</a>, que declaro conèixer i haver llegit en
-                      el moment de signar el present formulari.</label>
+                <div class="flex items-start">
+                    <input id="link-checkbox" type="checkbox" value=""
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        required class="form-checkbox">
+                    <label for="link-checkbox" class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">Accepto
+                        respectar i complir les normes de convivència i de funcionament de
+                        l’APdC, així com a respectar i complir el <a
+                            href="https://www.dansacat.org/lassociacio/cures-i-buenas-praxis/"
+                            class="text-blue-600 dark:text-blue-500 hover:underline">seu Reglament de Règim Intern </a>i
+                        el
+                        <a href="https://www.dansacat.org/lassociacio/cures-i-buenas-praxis/"
+                            class="text-blue-600 dark:text-blue-500 hover:underline">Protocol contra les violències
+                            masclistes</a>, que declaro conèixer i haver llegit en
+                        el moment de signar el present formulari.</label>
                 </div>
 
                 <div class="mt-6 flex justify-end space-x-3">
@@ -221,14 +332,19 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
                     </button>
                 </div>
             </form>
-            
-            <div id="successMessageContainer" class="hidden mt-4 p-4 bg-green-50 rounded-lg border border-green-200 text-green-800">
+
+            <div id="successMessageContainer"
+                class="hidden mt-4 p-4 bg-green-50 rounded-lg border border-green-200 text-green-800">
                 <div class="flex items-center">
-                    <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                     <p id="successMessageText" class="font-medium text-sm md:text-base"></p>
                 </div>
             </div>
-            
+
             <div id="modalFeedbackArea" class="mt-4"></div>
         </div>
     </div>
@@ -236,7 +352,7 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
 
     <script>
         // --- Configuració ---
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzHX187wj8p4jISMff2JuVkYYHGI3ZWRkIT7MpG2GUEgLqxpmKUmmg0mUQ1bRPU9B9bkA/exec'; // URL de l'Apps Script (no canviar si ja funciona)
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxj0voIpYIoJKQ6biHLlQz0wYadKvtbgMItaC0bGupHme4JAQ4IkrTgUj7pVi3XodaYgg/exec'; // URL de l'Apps Script (no canviar si ja funciona)
 
         // --- Variables Globals ---
         const sessionsListElement = document.getElementById('sessionsList');
@@ -321,12 +437,12 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
                 sessionElement.className = `p-4 border ${isFull ? 'bg-gray-200 border-gray-300' : 'bg-white border-gray-200'} rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0`;
 
                 sessionElement.innerHTML = `
-                    <div>
+                    <div class="text-center md:text-left">
                         <h3 class="text-lg font-semibold ${isFull ? 'text-gray-500' : 'text-gray-800'}">${session.name}</h3>
                         <p class="text-sm text-gray-600">Lloc: ${session.location} | Horari: ${session.dateTime}</p>
                         
                     </div>
-                    <div class="text-center">
+                    <div class="text-center md:text-right">
                         <p class="text-sm font-medium ${isFull ? 'text-red-600' : 'text-green-600'}">
                             ${isFull ? 'Complet' : `${remainingSpots} places lliures`}
                         </p>
@@ -369,12 +485,12 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
             modalInitialMessage.style.display = 'block'; // Mostrar el mensaje inicial de la sesión
             registrationForm.style.display = 'block'; // Mostrar el formulario
             cancelModalButton.style.display = 'inline-block'; // Mostrar el botón de cancelar
-            
+
             // Ocultar el mensaje de éxito si estaba visible de una interacción anterior
-            successMessageContainer.classList.add('hidden'); 
+            successMessageContainer.classList.add('hidden');
 
             // Usamos el texto de la sesión con más detalles que añadiste
-            modalSessionName.textContent = `${session.name} | Horari: ${session.dateTime} | Lloc: ${session.location}`;
+            modalSessionName.innerHTML = `${session.name}<br> Horari: ${session.dateTime} | Lloc: ${session.location}`;
             sessionIdInput.value = session.id;
 
             registrationForm.reset(); // Limpiar los campos del formulario
@@ -473,12 +589,12 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
                 } else {
                     // Si hay un error, mostrar el mensaje en el área de feedback del modal
                     showFeedback(result.message || "Error desconegut en registrar.", false, true);
-                    
+
                     // Restaurar el botón y asegurar que el formulario esté visible
                     submitButton.disabled = false;
                     submitButton.textContent = 'Confirmar Registre';
                     submitButton.classList.add('btn-primary'); // Asegurar que tiene la clase primaria
-                    
+
                     registrationForm.style.display = 'block'; // Mostrar formulario
                     modalInitialMessage.style.display = 'block'; // Mostrar mensaje inicial
                     cancelModalButton.style.display = 'inline-block'; // Mostrar botón cancelar
@@ -489,12 +605,12 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
             } catch (error) {
                 console.error('Error en enviar el registre:', error);
                 showFeedback(`Error de connexió o del servidor: ${error.message}`, false, true);
-                
+
                 // Restaurar el botón y asegurar que el formulario esté visible en caso de error de conexión
                 submitButton.disabled = false;
                 submitButton.textContent = 'Confirmar Registre';
-                    submitButton.classList.add('btn-primary');
-                
+                submitButton.classList.add('btn-primary');
+
                 registrationForm.style.display = 'block';
                 modalInitialMessage.style.display = 'block';
                 cancelModalButton.style.display = 'inline-block';
@@ -516,7 +632,7 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
             loadSessions();
             registrationForm.addEventListener('submit', handleRegistrationSubmit);
 
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target == registrationModal) {
                     closeModal();
                 }
@@ -526,4 +642,5 @@ professionals-contemporani/" class="text-center font-medium text-pink-600 dark:t
     </script>
 
 </body>
+
 </html>
